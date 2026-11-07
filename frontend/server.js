@@ -293,7 +293,7 @@ const server = http.createServer(async (req, res) => {
   // ==========================================
   // STATIC ASSET SERVING
   // ==========================================
-  if (pathname.startsWith('/css/') || pathname.startsWith('/js/')) {
+  if (pathname.startsWith('/css/') || pathname.startsWith('/js/') || pathname.endsWith('.svg') || pathname.endsWith('.png') || pathname.endsWith('.ico') || pathname.endsWith('.woff2')) {
     const filePath = path.join(PUBLIC_DIR, pathname);
     fs.stat(filePath, (err, stats) => {
       if (err || !stats.isFile()) {

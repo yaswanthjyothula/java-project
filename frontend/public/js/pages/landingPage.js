@@ -24,6 +24,8 @@
  * 18. Important User Notice Ticker (90-second Continuous Marquee)
  */
 
+import { renderHeroIllustration } from '../components/heroIllustration.js';
+
 export function renderLandingPage() {
   const currentYear = new Date().getFullYear();
 
@@ -404,6 +406,11 @@ export function renderLandingPage() {
                   SIMULATION ACTIVE
                 </span>
               </div>
+            </div>
+
+            <!-- 3D Isometric Financial Telemetry Preview -->
+            <div style="margin-bottom:18px; border-radius:8px; overflow:hidden; border:1px solid var(--border-primary); background:#FFFFFF; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 16px rgba(0,0,0,0.03);">
+              ${renderHeroIllustration({ maxHeight: '420px' })}
             </div>
 
             <!-- KPI Metric Grid -->

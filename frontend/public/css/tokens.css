@@ -1,49 +1,240 @@
 /**
- * CryptoVista X Enterprise - Design Tokens
- * Visual foundation inspired by Groww's design discipline
- * Original CryptoVista color tokens & typographic system
+ * CryptoVista X Enterprise - Complete Groww Design Tokens System
+ * Unified typography, color scales, layout constants, and interaction states
  */
 
-:root {
-  /* Groww-inspired Content & Text Colors */
-  --content-primary: #44475B;
-  --content-secondary: #7C7E8C;
-  --content-tertiary: #A1A3AD;
-  --content-inverse: #FFFFFF;
+@font-face {
+  font-family: GrowwSans;
+  font-style: normal;
+  font-weight: 300 700;
+  src: url("https://resources.groww.in/web-assets/font/GrowwSans-Variable.woff2") format("woff2-variations");
+  font-display: swap;
+}
 
-  /* Background & Surface Colors */
-  --background-primary: #FFFFFF;
-  --background-secondary: #F8F8F8;
-  --background-tertiary: #F0F0F2;
-  --surface-hover: #F4F6F8;
-  --surface-active: #E9ECEF;
+@font-face {
+  font-family: NotoSans;
+  font-style: normal;
+  font-weight: 500;
+  src: url("https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/NotoSans-Regular.05ee3c64.woff2") format("woff2");
+  unicode-range: U+900-97F;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: NotoSans;
+  font-style: normal;
+  font-weight: 600;
+  src: url("https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/NotoSans-Medium.a342421c.woff2") format("woff2");
+  unicode-range: U+900-97F;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: NotoSans;
+  font-style: normal;
+  font-weight: 700;
+  src: url("https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/NotoSans-SemiBold.450bfe1f.woff2") format("woff2");
+  unicode-range: U+900-97F;
+  font-display: swap;
+}
+
+:root {
+  font-weight: 435;
+  font-family: GrowwSans, NotoSans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--content-primary) !important;
+}
+
+html {
+  /* Semantic Content Hierarchy */
+  --content-primary: var(--gray900);
+  --content-secondary: var(--gray700);
+  --content-tertiary: var(--gray500);
+  --content-inverse-primary: var(--white);
+  --content-inverse-secondary: var(--gray300);
+  --content-disabled: var(--gray400);
+  --content-on-colour: var(--white);
+  --content-on-colour-inverse: var(--neutral12);
+  --content-accent: var(--green9);
+  --content-negative: var(--red9);
+  --content-warning: var(--yellow500);
+  --content-positive: var(--green9);
+  --content-accent-secondary: var(--purple500);
+  --content-accent-secondary-subtle: var(--purple300);
+  --content-on-warning-subtle: var(--yellow11);
+  --content-on-accent-subtle: var(--green11);
+  --content-on-accent-secondary-subtle: var(--blue11);
+  --content-on-positive-subtle: var(--green11);
+  --content-on-negative-subtle: var(--red11);
+
+  /* Grays Scale */
+  --gray900: #44475b;
+  --gray800: #696c7c;
+  --gray700: #7c7e8c;
+  --gray600: #8f919d;
+  --gray500: #a1a3ad;
+  --gray400: #b0b2ba;
+  --gray300: #c7c8ce;
+  --gray200: #dddee1;
+  --gray150: #e9e9eb;
+  --gray100: #f0f0f2;
+  --gray50: #f8f8f8;
+
+  /* Greens Scale */
+  --green1: #fafefc;
+  --green2: #e9faf3;
+  --green3: #e0f8ee;
+  --green4: #cdf3e3;
+  --green5: #b7ecd6;
+  --green6: #9ce2c6;
+  --green7: #75d3b0;
+  --green8: #24bf92;
+  --green9: #04b488;
+  --green10: #00a87d;
+  --green11: #00825c;
+  --green12: #0d3d2e;
+  --green100: #e9faf3;
+  --green300: #66e3c4;
+  --green500: #04b488;
+
+  /* Reds Scale */
+  --red1: #fffcfb;
+  --red2: #fff1ed;
+  --red3: #ffebe6;
+  --red4: #ffdacf;
+  --red5: #ffcbbc;
+  --red6: #ffbbab;
+  --red7: #f7a895;
+  --red8: #ee8e78;
+  --red9: #ed5533;
+  --red10: #df4622;
+  --red11: #d23a15;
+  --red12: #5b291d;
+  --red100: #fae9e5;
+  --red500: #ed5533;
+
+  /* Yellows Scale */
+  --yellow1: #fefdfb;
+  --yellow2: #fff7de;
+  --yellow3: #fff1c3;
+  --yellow4: #ffe7aa;
+  --yellow5: #ffdc8b;
+  --yellow6: #ffcd65;
+  --yellow7: #f5bc57;
+  --yellow8: #e4a417;
+  --yellow9: #e7a71e;
+  --yellow10: #db9c00;
+  --yellow11: #a16b00;
+  --yellow12: #4a3819;
+  --yellow100: #fff5e0;
+  --yellow500: #ffb61b;
+
+  /* Blues & Purples Scale */
+  --blue1: #fdfdfe;
+  --blue2: #f2f5ff;
+  --blue3: #edf2ff;
+  --blue4: #e0e9ff;
+  --blue5: #d1deff;
+  --blue6: #bfcfff;
+  --blue7: #a9bcff;
+  --blue8: #8ba1fb;
+  --blue9: #5669ff;
+  --blue10: #4d5fe4;
+  --blue11: #4452d6;
+  --blue12: #212a63;
+
+  --purple100: #eef0ff;
+  --purple300: #84a4ff;
+  --purple500: #5367ff;
+
+  --lilac1: #fcfcff;
+  --lilac2: #f0f4ff;
+  --lilac3: #eef0fd;
+  --lilac4: #e4e8fc;
+  --lilac5: #dadef9;
+  --lilac6: #ced4f4;
+  --lilac7: #bec5ee;
+  --lilac8: #a6afe5;
+  --lilac9: #5e659a;
+  --lilac10: #51578b;
+  --lilac11: #5b6297;
+  --lilac12: #252944;
+
+  /* Neutrals */
+  --neutral1: #fff;
+  --neutral2: #f7f7f7;
+  --neutral3: #eff0f1;
+  --neutral4: #e7e8e9;
+  --neutral5: #e0e1e2;
+  --neutral6: #d8d9da;
+  --neutral7: #cdcecf;
+  --neutral8: #babbbc;
+  --neutral9: #898c8e;
+  --neutral10: #7f8283;
+  --neutral11: #7f8283;
+  --neutral12: #353839;
+
+  --black: #121212;
+  --white: #ffffff;
+
+  /* Overlays */
+  --overlay00: rgba(18,18,18,0);
+  --overlay30: rgba(18,18,18,0.3);
+  --overlay70: rgba(18,18,18,0.7);
+
+  /* Hover & Selected Interactive States */
+  --accent-hover: #04ad83;
+  --accent-subtle-hover: #e0f8ee;
+  --accent-selected: #04ad83;
+  --accent-subtle-selected: #ddf5ee;
+  --transparent-hover: rgba(68,71,91,0.058823529411764705);
+  --transparent-accent-hover: rgba(0,179,134,0.058823529411764705);
+  --positive-hover: #04ad83;
+  --positive-subtle-hover: #ddf5ee;
+  --transparent-positive-hover: rgba(0,179,134,0.058823529411764705);
+  --negative-hover: #e15a3e;
+  --negative-subtle-hover: #f9e0db;
+  --transparent-negative-hover: rgba(235,91,60,0.058823529411764705);
+  --transparent-selected: rgba(68,71,91,0.058823529411764705);
+  --transparent-accent-selected: rgba(0,179,134,0.058823529411764705);
+  --positive-selected: #04ad83;
+  --positive-subtle-selected: #ddf5ee;
+  --transparent-positive-selected: rgba(0,179,134,0.058823529411764705);
+  --negative-selected: #e15a3e;
+  --negative-subtle-selected: #f9e0db;
+  --transparent-negative-selected: rgba(235,91,60,0.058823529411764705);
+
+  /* Surfaces & Backgrounds */
+  --background-primary: var(--white);
+  --background-secondary: var(--gray50);
+  --background-tertiary: var(--gray100);
+  --surface-hover: var(--neutral2);
+  --surface-active: var(--neutral3);
 
   /* Borders & Dividers */
-  --border-primary: #E9E9EB;
-  --border-secondary: #DFDFE2;
-  --border-subtle: #F2F2F4;
-  --border-focus: #04B488;
+  --border-primary: var(--gray150);
+  --border-secondary: var(--gray200);
+  --border-subtle: var(--neutral3);
+  --border-focus: var(--green9);
 
-  /* Primary Brand & Accents (Restrained Green) */
-  --accent-green: #04B488;
-  --accent-hover: #04AD83;
-  --accent-subtle: #E9FAF3;
+  /* Primary Brand & Accents */
+  --accent-green: var(--green9);
+  --accent-subtle: var(--green2);
   --accent-border: rgba(4, 180, 136, 0.3);
 
   /* Semantic State Colors */
-  --positive: #04B488;
-  --positive-bg: #E9FAF3;
-  --negative: #ED5533;
-  --negative-bg: #FDF1ED;
-  --warning: #FFB61B;
-  --warning-bg: #FFF8E6;
-  --secondary-blue: #5669FF;
-  --secondary-blue-bg: #EFF1FF;
+  --positive: var(--green9);
+  --positive-bg: var(--green2);
+  --negative: var(--red9);
+  --negative-bg: var(--red2);
+  --warning: var(--yellow500);
+  --warning-bg: var(--yellow2);
+  --secondary-blue: var(--blue9);
+  --secondary-blue-bg: var(--blue2);
 
   /* Backward Compatibility Aliases */
-  --cv-brand-green: var(--accent-green);
+  --cv-brand-green: var(--green9);
   --cv-brand-green-hover: var(--accent-hover);
-  --cv-soft-green: var(--accent-subtle);
+  --cv-soft-green: var(--green2);
   --cv-bg-page: var(--background-secondary);
   --cv-bg-white: var(--background-primary);
   --cv-border: var(--border-primary);
@@ -93,18 +284,20 @@
   --cv-max-width: 1280px;
 
   /* Font Families */
-  --cv-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --cv-font: GrowwSans, NotoSans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --cv-font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 * {
   box-sizing: border-box;
+  font-variant-ligatures: none;
   margin: 0;
   padding: 0;
 }
 
 body {
   font-family: var(--cv-font);
+  font-weight: 435;
   background: var(--background-primary);
   color: var(--content-primary);
   line-height: 1.5;
@@ -116,6 +309,7 @@ a {
   text-decoration: none;
   transition: color 0.15s ease;
 }
+
 a:hover {
   text-decoration: none;
   color: var(--accent-hover);
