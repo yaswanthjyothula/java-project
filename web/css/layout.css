@@ -1,0 +1,474 @@
+/**
+ * CryptoVista X Enterprise - Layout & Section Styles
+ * Modeled on Groww's section rhythm & spatial discipline
+ */
+
+.cv-container {
+  width: 100%;
+  max-width: var(--cv-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--cv-space-6);
+  padding-right: var(--cv-space-6);
+}
+
+.section {
+  padding-top: var(--cv-space-16);
+  padding-bottom: var(--cv-space-16);
+}
+
+.section-tight {
+  padding-top: var(--cv-space-12);
+  padding-bottom: var(--cv-space-12);
+}
+
+.bg-white {
+  background-color: var(--cv-white);
+}
+
+.bg-grey {
+  background-color: var(--cv-page-grey);
+}
+
+/* 1. HEADER (Section 6.1) */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  height: var(--cv-header-height);
+  background-color: var(--cv-white);
+  border-bottom: 1px solid var(--cv-border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--cv-space-6);
+  list-style: none;
+}
+
+.nav-link {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--cv-text-primary);
+  text-decoration: none;
+  transition: color var(--cv-transition-fast);
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--cv-brand-green);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--cv-space-3);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--cv-space-2);
+  color: var(--cv-text-primary);
+}
+
+/* 2. HERO SECTION (Section 6.2) */
+.hero-section {
+  padding-top: var(--cv-space-12);
+  padding-bottom: var(--cv-space-16);
+  background-color: var(--cv-white);
+  border-bottom: 1px solid var(--cv-border);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--cv-space-12);
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 540px;
+}
+
+.hero-headline {
+  font-size: var(--cv-fs-hero);
+  font-weight: 800;
+  line-height: var(--cv-lh-tight);
+  color: var(--cv-text-primary);
+  margin-bottom: var(--cv-space-4);
+  letter-spacing: -0.025em;
+}
+
+.hero-subhead {
+  font-size: 17px;
+  color: var(--cv-text-secondary);
+  line-height: 1.55;
+  margin-bottom: var(--cv-space-6);
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: var(--cv-space-3);
+  margin-bottom: var(--cv-space-4);
+  flex-wrap: wrap;
+}
+
+.hero-microcopy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--cv-fs-caption);
+  color: var(--cv-text-muted);
+}
+
+/* Hero Dashboard Preview (Realistic Desktop UI Composition) */
+.hero-preview-window {
+  background-color: var(--cv-white);
+  border: 1px solid var(--cv-border);
+  border-radius: var(--cv-radius-card);
+  box-shadow: 0 8px 24px rgba(23, 26, 33, 0.05);
+  overflow: hidden;
+}
+
+.window-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: var(--cv-page-grey);
+  border-bottom: 1px solid var(--cv-border);
+}
+
+.window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.window-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--cv-border);
+}
+
+.window-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cv-text-muted);
+  letter-spacing: 0.5px;
+}
+
+.preview-body {
+  padding: var(--cv-space-4);
+}
+
+.preview-kpi-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  gap: var(--cv-space-3);
+  margin-bottom: var(--cv-space-4);
+}
+
+.kpi-card {
+  background-color: var(--cv-page-grey);
+  border: 1px solid var(--cv-border);
+  border-radius: var(--cv-radius-card);
+  padding: var(--cv-space-3);
+}
+
+.kpi-label {
+  font-size: var(--cv-fs-caption);
+  color: var(--cv-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.kpi-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cv-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-sub {
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* 3. PRODUCT DISCOVERY STRIP (Section 6.3) */
+.discovery-strip {
+  padding: var(--cv-space-8) 0;
+  border-bottom: 1px solid var(--cv-border);
+  background-color: var(--cv-white);
+}
+
+.discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--cv-space-4);
+}
+
+.discovery-card {
+  border: 1px solid var(--cv-border);
+  border-radius: var(--cv-radius-card);
+  padding: var(--cv-space-4);
+  background-color: var(--cv-white);
+  transition: border-color var(--cv-transition-fast), background-color var(--cv-transition-fast);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.discovery-card:hover {
+  border-color: var(--cv-brand-green);
+  background-color: var(--cv-page-grey);
+}
+
+.discovery-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cv-soft-green);
+  color: var(--cv-brand-green);
+  border-radius: 3px;
+  margin-bottom: var(--cv-space-3);
+}
+
+.discovery-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cv-text-primary);
+  margin-bottom: 4px;
+}
+
+.discovery-desc {
+  font-size: 13px;
+  color: var(--cv-text-secondary);
+  line-height: 1.45;
+  margin-bottom: var(--cv-space-3);
+  flex-grow: 1;
+}
+
+.discovery-link {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--cv-brand-green);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 4. FEATURE SHOWCASE SPLIT LAYOUT (Sections 6.4 - 6.8) */
+.feature-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--cv-space-12);
+  align-items: center;
+}
+
+.feature-split.reverse {
+  direction: rtl;
+}
+
+.feature-split.reverse > * {
+  direction: ltr;
+}
+
+.feature-checklist {
+  list-style: none;
+  margin: var(--cv-space-4) 0 var(--cv-space-6) 0;
+}
+
+.feature-checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cv-space-2);
+  font-size: 14.5px;
+  color: var(--cv-text-primary);
+  margin-bottom: var(--cv-space-2);
+}
+
+.feature-checklist-item svg {
+  color: var(--cv-brand-green);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* 5. PRODUCT CAPABILITIES GRID (Section 6.10) */
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--cv-space-4);
+}
+
+.capability-card {
+  background-color: var(--cv-white);
+  border: 1px solid var(--cv-border);
+  border-radius: var(--cv-radius-card);
+  padding: var(--cv-space-4);
+}
+
+.capability-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cv-text-primary);
+  margin-bottom: 6px;
+}
+
+.capability-value {
+  font-size: 13px;
+  color: var(--cv-text-secondary);
+  line-height: 1.45;
+}
+
+/* 6. ROLE USE-CASE STRIP (Section 6.11) */
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--cv-space-3);
+  margin-top: var(--cv-space-6);
+}
+
+.role-card {
+  background-color: var(--cv-white);
+  border: 1px solid var(--cv-border);
+  border-radius: var(--cv-radius-card);
+  padding: var(--cv-space-4);
+  text-align: left;
+}
+
+.role-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cv-brand-green);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.role-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cv-text-primary);
+  margin-bottom: 4px;
+}
+
+.role-desc {
+  font-size: 12.5px;
+  color: var(--cv-text-secondary);
+  line-height: 1.4;
+}
+
+/* 7. FINAL CTA CONTAINER (Section 6.13) */
+.final-cta-card {
+  background-color: var(--cv-page-grey);
+  border: 1px solid var(--cv-border);
+  border-radius: var(--cv-radius-card);
+  padding: var(--cv-space-12) var(--cv-space-8);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.final-cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cv-space-3);
+  margin-top: var(--cv-space-6);
+  flex-wrap: wrap;
+}
+
+/* 8. FOOTER (Section 6.14) */
+.site-footer {
+  background-color: var(--cv-white);
+  border-top: 1px solid var(--cv-border);
+  padding-top: var(--cv-space-12);
+  padding-bottom: var(--cv-space-12);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr repeat(5, 1fr);
+  gap: var(--cv-space-6);
+  margin-bottom: var(--cv-space-12);
+}
+
+.footer-brand-col {
+  padding-right: var(--cv-space-6);
+}
+
+.footer-brand-desc {
+  font-size: 13px;
+  color: var(--cv-text-secondary);
+  margin-top: var(--cv-space-3);
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+.footer-col-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--cv-text-primary);
+  margin-bottom: var(--cv-space-4);
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-link-item {
+  margin-bottom: var(--cv-space-2);
+}
+
+.footer-link {
+  font-size: 13.5px;
+  color: var(--cv-text-secondary);
+  text-decoration: none;
+  transition: color var(--cv-transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--cv-brand-green);
+}
+
+.footer-disclaimer-row {
+  border-top: 1px solid var(--cv-border);
+  padding-top: var(--cv-space-6);
+  font-size: 12px;
+  color: var(--cv-text-muted);
+  line-height: 1.6;
+}
+
+.footer-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--cv-space-4);
+  font-size: 12px;
+  color: var(--cv-text-muted);
+}

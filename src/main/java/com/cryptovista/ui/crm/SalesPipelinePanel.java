@@ -219,3 +219,4 @@ public class SalesPipelinePanel extends JPanel {
         }
     }
 }
+

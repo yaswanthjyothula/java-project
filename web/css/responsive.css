@@ -1,0 +1,114 @@
+/**
+ * CryptoVista X Enterprise - Responsive Reflow (Section 10)
+ * Breakpoints: 1024px (Tablet), 768px (Small Tablet/Mobile), 480px (Narrow Mobile)
+ */
+
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--cv-space-8);
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .feature-split, .feature-split.reverse {
+    grid-template-columns: 1fr;
+    gap: var(--cv-space-6);
+    direction: ltr !important;
+  }
+
+  .discovery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .capabilities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .roles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--cv-space-8);
+  }
+
+  .footer-brand-col {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 860px) {
+  .header-nav {
+    display: none;
+    position: absolute;
+    top: var(--cv-header-height);
+    left: 0;
+    right: 0;
+    background-color: var(--cv-white);
+    border-bottom: 1px solid var(--cv-border);
+    flex-direction: column;
+    padding: var(--cv-space-4) var(--cv-space-6);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    align-items: flex-start;
+    gap: var(--cv-space-3);
+  }
+
+  .header-nav.mobile-open {
+    display: flex;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .header-actions .btn-text {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --cv-fs-hero: 34px;
+    --cv-fs-h1: 26px;
+    --cv-fs-h2: 22px;
+  }
+
+  .section {
+    padding-top: var(--cv-space-12);
+    padding-bottom: var(--cv-space-12);
+  }
+
+  .discovery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .capabilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .roles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-kpi-row {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--cv-space-2);
+  }
+
+  .final-cta-card {
+    padding: var(--cv-space-8) var(--cv-space-4);
+  }
+}

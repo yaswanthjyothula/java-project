@@ -122,3 +122,4 @@ public class AuditLogPanel extends JPanel {
         logCountLabel.setText("Showing " + logs.size() + " Audit Entries (Tenant Filter Enforced)");
     }
 }
+

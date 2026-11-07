@@ -1,0 +1,75 @@
+/**
+ * CryptoVista X Enterprise - Design Tokens
+ * Version 4.0 | Groww-inspired precision, institutional fintech depth
+ */
+
+:root {
+  /* Brand Color Tokens (Section 5) */
+  --cv-brand-green: #00B386;
+  --cv-brand-green-hover: #008F6B;
+  --cv-soft-green: #E8F7F1;
+  --cv-white: #FFFFFF;
+  --cv-page-grey: #F7F8FA;
+  --cv-border: #E6E8EB;
+  --cv-border-subtle: #F0F2F5;
+  --cv-border-dark: #D1D5DB;
+
+  /* Typography / Text Tokens */
+  --cv-text-primary: #171A21;
+  --cv-text-secondary: #6B7280;
+  --cv-text-muted: #9097A2;
+
+  /* Semantic State Tokens */
+  --cv-positive: #16A36A;
+  --cv-positive-bg: #ECFDF5;
+  --cv-negative: #D94B4B;
+  --cv-negative-bg: #FEF2F2;
+  --cv-warning: #D99A16;
+  --cv-warning-bg: #FFFBEB;
+  --cv-info: #3677D5;
+  --cv-info-bg: #EFF6FF;
+
+  /* Strict Spacing Scale (Section 5) */
+  --cv-space-1: 4px;
+  --cv-space-2: 8px;
+  --cv-space-3: 12px;
+  --cv-space-4: 16px;
+  --cv-space-6: 24px;
+  --cv-space-8: 32px;
+  --cv-space-12: 48px;
+  --cv-space-16: 64px;
+
+  /* Radii (Strictly rectangular / subtle radius: 2-4px, no capsule pills) */
+  --cv-radius-input: 3px;
+  --cv-radius-btn: 3px;
+  --cv-radius-card: 4px;
+  --cv-radius-panel: 4px;
+
+  /* Typography Stack */
+  --cv-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --cv-font-mono: 'JetBrains Mono', 'SF Mono', Consolas, Monaco, monospace;
+
+  /* Typographic Scale */
+  --cv-fs-hero: 46px;
+  --cv-fs-h1: 34px;
+  --cv-fs-h2: 26px;
+  --cv-fs-h3: 20px;
+  --cv-fs-h4: 17px;
+  --cv-fs-body: 16px;
+  --cv-fs-table: 13.5px;
+  --cv-fs-caption: 12px;
+  --cv-fs-micro: 11px;
+
+  /* Line Heights */
+  --cv-lh-tight: 1.18;
+  --cv-lh-heading: 1.28;
+  --cv-lh-body: 1.52;
+
+  /* Container Max Width */
+  --cv-max-width: 1240px;
+  --cv-header-height: 64px;
+
+  /* Transitions */
+  --cv-transition-fast: 0.15s ease-in-out;
+  --cv-transition-normal: 0.22s ease-in-out;
+}
