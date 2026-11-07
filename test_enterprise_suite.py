@@ -1,30 +1,24 @@
 """
-CryptoVista X Enterprise - Complete Enterprise Test Harness
+CryptoVista X Enterprise - Pure Java Desktop Test Harness
 Executes:
-1. Public Marketing Website & Web Workstation Verification Suite (test_website.py)
-2. Java 21 Domain, Financial Engine & Security Test Suite (com.cryptovista.TestRunner)
-3. SRS Alignment & Traceability Completeness Check
-4. Multi-Tenant MySQL 8 Persistence & Schema Audit (V1 and V2 DDL)
-5. Java 21 Swing Desktop Architecture & Bytecode Verification
+1. Java 21 Domain, Financial Engine & Security Test Suite (com.cryptovista.TestRunner)
+2. SRS Alignment & Traceability Completeness Check
+3. Multi-Tenant MySQL 8 Persistence & Schema Audit (V1 and V2 DDL)
+4. Java 21 Swing Desktop Architecture & Bytecode Verification
+5. Strict Invariant Verification: ZERO HTML files in repository
 """
 
 import os
 import re
 import sys
 import subprocess
+import glob
 
 WORKSPACE_DIR = os.path.dirname(os.path.abspath(__file__))
 JAVA_BIN = r"C:\Program Files\Eclipse Adoptium\jdk-21.0.13.9-hotspot\bin\java.exe"
 
-def run_web_suite():
-    print("[TEST SUITE 1/5] Running Public Website & Web Workstation Verification...")
-    res = subprocess.run([sys.executable, os.path.join(WORKSPACE_DIR, 'test_website.py')], capture_output=True, text=True, encoding='utf-8', errors='replace')
-    assert res.returncode == 0, f"Web test suite failed:\n{res.stderr}"
-    print(res.stdout.strip())
-    print("✓ Public Website & Web Workstation Verification passed 100%.")
-
 def run_java_domain_test_suite():
-    print("\n[TEST SUITE 2/5] Running Java 21 Domain, Financial & Security Test Suite...")
+    print("[TEST SUITE 1/4] Running Java 21 Domain, Financial & Security Test Suite...")
     m2_repo = os.path.expanduser(r"~\.m2\repository")
     jars = []
     for root, _, files in os.walk(m2_repo):
@@ -40,7 +34,7 @@ def run_java_domain_test_suite():
     print("✓ All Java domain unit, financial ledger, and security tests passed 100%.")
 
 def run_srs_traceability_audit():
-    print("\n[TEST SUITE 3/5] Running SRS v1.0 Traceability Audit...")
+    print("\n[TEST SUITE 2/4] Running SRS v1.0 Traceability Audit...")
     matrix_path = os.path.join(WORKSPACE_DIR, 'docs', 'TRACEABILITY_MATRIX.md')
     assert os.path.exists(matrix_path), "Missing TRACEABILITY_MATRIX.md"
     with open(matrix_path, 'r', encoding='utf-8') as f:
@@ -61,7 +55,7 @@ def run_srs_traceability_audit():
     print(f"✓ All {len(mandatory_reqs)} core SRS requirement IDs traced.")
 
 def run_schema_audit():
-    print("\n[TEST SUITE 4/5] Running MySQL 8 Multi-Tenant Schema Audit...")
+    print("\n[TEST SUITE 3/4] Running MySQL 8 Multi-Tenant Schema Audit...")
     sql_v1 = os.path.join(WORKSPACE_DIR, 'sql', 'V1__init_schema.sql')
     assert os.path.exists(sql_v1), "Missing sql/V1__init_schema.sql"
     with open(sql_v1, 'r', encoding='utf-8') as f:
@@ -100,7 +94,7 @@ def run_schema_audit():
     print(f"✓ All {len(v2_tables)} complete enterprise multi-tenant tables verified in V2 DDL.")
 
 def run_java_architecture_audit():
-    print("\n[TEST SUITE 5/5] Verifying Java 21 Desktop Classes & Bytecode...")
+    print("\n[TEST SUITE 4/4] Verifying Java 21 Desktop Classes & Bytecode...")
     classes_dir = os.path.join(WORKSPACE_DIR, 'target', 'classes', 'com', 'cryptovista')
     assert os.path.exists(classes_dir), "Compiled classes directory target/classes exists"
 
@@ -119,23 +113,29 @@ def run_java_architecture_audit():
         'ui/shell/MainFrame.class',
         'ui/theme/ThemeConstants.class',
         'ui/crm/Customer360Panel.class',
+        'ui/crm/SalesPipelinePanel.class',
         'ui/service/SupportTicketsPanel.class',
         'ui/operations/WorkflowApprovalsPanel.class',
         'ui/trading/TradingPanel.class',
         'ui/portfolio/PortfolioPanel.class',
-        'ui/admin/SecurityAdminPanel.class'
+        'ui/admin/SecurityAdminPanel.class',
+        'ui/admin/AuditLogPanel.class'
     ]
     for c in required_classes:
         full_path = os.path.join(classes_dir, c.replace('/', os.sep))
         assert os.path.exists(full_path), f"Missing compiled class: {c}"
     print(f"✓ All {len(required_classes)} Java 21 desktop classes compiled into bytecode.")
 
+    # Strict Invariant: ZERO HTML files in repository
+    html_files = glob.glob(os.path.join(WORKSPACE_DIR, "**", "*.html"), recursive=True)
+    assert len(html_files) == 0, f"PROHIBITED: HTML files found in repository: {html_files}"
+    print("✓ Strict Invariant Verified: ZERO HTML files exist in the repository (pure desktop application).")
+
 if __name__ == '__main__':
     print("================================================================")
     print("   CRYPTOVISTA X ENTERPRISE — MASTER VERIFICATION HARNESS       ")
-    print("   Target: Full Stack Platform (Web Workstation + Swing Client) ")
+    print("   Target: Pure Java Swing Desktop Application & MySQL 8        ")
     print("================================================================")
-    run_web_suite()
     run_java_domain_test_suite()
     run_srs_traceability_audit()
     run_schema_audit()

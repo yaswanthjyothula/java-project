@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
-  <!-- CryptoVista 32x32 Favicon -->
-  <rect width="32" height="32" rx="4" fill="#171A21"/>
-  <rect x="2" y="2" width="28" height="28" rx="3" stroke="#00B386" stroke-width="1.5" stroke-opacity="0.6"/>
-  <path d="M8 20L16 9L24 20" stroke="#00B386" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M12 20L16 14.5L20 20" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="16" cy="7.5" r="1.5" fill="#00B386"/>
-</svg>
