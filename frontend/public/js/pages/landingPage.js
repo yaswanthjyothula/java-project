@@ -386,7 +386,7 @@ export function renderLandingPage() {
           </div>
 
           <!-- Realistic Financial Dashboard Composition Preview -->
-          <div style="background:var(--background-secondary); border:1px solid var(--border-primary); border-radius:8px; padding:20px; box-shadow:0 16px 40px rgba(0,0,0,0.06); text-align:left;">
+          <div class="hero-preview-composition" id="hero-preview-composition" style="background:var(--background-secondary); border:1px solid var(--border-primary); border-radius:8px; padding:20px; box-shadow:0 16px 40px rgba(0,0,0,0.06); text-align:left;">
             
             <!-- Window Bar -->
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-primary); padding-bottom:14px; margin-bottom:18px;">
@@ -402,7 +402,8 @@ export function renderLandingPage() {
                 <span style="background:var(--accent-subtle); color:var(--accent-green); font-size:11px; font-weight:700; padding:3px 8px; border-radius:3px;">
                   TENANT: TENANT-APEX-01
                 </span>
-                <span style="background:#FFF; border:1px solid var(--border-primary); font-size:11px; font-weight:600; padding:3px 8px; border-radius:3px; color:var(--content-secondary);">
+                <span style="background:#FFF; border:1px solid var(--border-primary); font-size:11px; font-weight:600; padding:3px 8px; border-radius:3px; color:var(--content-secondary); display:inline-flex; align-items:center;">
+                  <span class="cv-radar-dot"></span>
                   SIMULATION ACTIVE
                 </span>
               </div>
@@ -410,14 +411,14 @@ export function renderLandingPage() {
 
             <!-- 3D Isometric Financial Telemetry Preview -->
             <div style="margin-bottom:18px; border-radius:8px; overflow:hidden; border:1px solid var(--border-primary); background:#FFFFFF; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 16px rgba(0,0,0,0.03);">
-              ${renderHeroIllustration({ maxHeight: '420px' })}
+              ${renderHeroIllustration({ maxHeight: '480px' })}
             </div>
 
             <!-- KPI Metric Grid -->
             <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-bottom:16px;">
               <div style="background:#FFFFFF; border:1px solid var(--border-primary); padding:16px; border-radius:6px;">
                 <div style="font-size:11px; font-weight:700; color:var(--content-tertiary); letter-spacing:0.4px;">TOTAL VIRTUAL NAV</div>
-                <div style="font-size:22px; font-weight:800; color:var(--content-primary); margin-top:4px; font-family:var(--cv-font-mono);">₹1,38,42,875.00</div>
+                <div id="hero-kpi-nav" style="font-size:22px; font-weight:800; color:var(--content-primary); margin-top:4px; font-family:var(--cv-font-mono); padding:1px 4px; border-radius:3px; transition:background-color 0.4s;">₹1,38,42,875.00</div>
                 <div style="font-size:11.5px; color:var(--positive); font-weight:600; margin-top:2px;">+4.12% Unrealized P&L</div>
               </div>
               <div style="background:#FFFFFF; border:1px solid var(--border-primary); padding:16px; border-radius:6px;">
@@ -441,10 +442,11 @@ export function renderLandingPage() {
             <div style="background:#FFFFFF; border:1px solid var(--border-primary); padding:14px 18px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
               <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
                 <span style="font-size:13px; font-weight:700; color:var(--content-primary);">Order Gateway Telemetry:</span>
-                <span style="font-family:var(--cv-font-mono); font-size:13px; color:var(--content-secondary);">
+                <span id="hero-live-order-quote" style="font-family:var(--cv-font-mono); font-size:13px; color:var(--content-secondary); padding:1px 4px; border-radius:3px; transition:background-color 0.4s;">
                   BUY 0.25 BTC @ ₹82,45,100.00
                 </span>
-                <span style="background:var(--positive-bg); color:var(--positive); font-size:11px; font-weight:700; padding:2px 8px; border-radius:3px;">
+                <span style="background:var(--positive-bg); color:var(--positive); font-size:11px; font-weight:700; padding:2px 8px; border-radius:3px; display:inline-flex; align-items:center;">
+                  <span class="cv-radar-dot" style="width:6px; height:6px;"></span>
                   FILLED (VIRTUAL)
                 </span>
                 <span style="font-size:12px; color:var(--content-tertiary);">
@@ -1954,4 +1956,91 @@ export function initLandingPageListeners() {
       });
     });
   }
+
+  // 5. Interactive 3D Parallax & Perspective Tilt on Hero Preview
+  const heroComposition = document.getElementById('hero-preview-composition');
+  const heroVector = document.getElementById('hero-vector-layer');
+
+  if (heroComposition) {
+    heroComposition.addEventListener('mousemove', (e) => {
+      const rect = heroComposition.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -5; // Max 5 deg tilt
+      const rotateY = ((x - centerX) / centerX) * 5;  // Max 5 deg tilt
+
+      heroComposition.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+      if (heroVector) {
+        heroVector.style.transform = `translate3d(${((x - centerX) * 0.03).toFixed(1)}px, ${((y - centerY) * 0.03).toFixed(1)}px, 15px)`;
+      }
+    });
+
+    heroComposition.addEventListener('mouseleave', () => {
+      heroComposition.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+      if (heroVector) {
+        heroVector.style.transform = 'translate3d(0px, 0px, 0px)';
+      }
+    });
+  }
+
+  // 6. Live Real-Time Simulated Ticker & Telemetry Pulse
+  if (window._cvHeroTickerInterval) {
+    clearInterval(window._cvHeroTickerInterval);
+  }
+
+  const btcPriceEl = document.getElementById('hero-live-btc-price');
+  const btcChangeEl = document.getElementById('hero-live-btc-change');
+  const heroNavEl = document.getElementById('hero-live-nav-val');
+  const kpiNavEl = document.getElementById('hero-kpi-nav');
+  const orderQuoteEl = document.getElementById('hero-live-order-quote');
+
+  let basePrice = 8245100;
+  let baseNav = 13842875;
+
+  window._cvHeroTickerInterval = setInterval(() => {
+    if (!document.getElementById('hero-live-btc-price')) {
+      clearInterval(window._cvHeroTickerInterval);
+      return;
+    }
+
+    const deltaPrice = (Math.random() - 0.46) * 1400;
+    basePrice = Math.max(8210000, Math.min(8325000, basePrice + deltaPrice));
+    const deltaNav = (deltaPrice * 0.25) + ((Math.random() - 0.42) * 600);
+    baseNav = Math.max(13810000, baseNav + deltaNav);
+
+    const formattedPrice = '₹' + Math.round(basePrice).toLocaleString('en-IN');
+    const formattedNav = '₹' + Math.round(baseNav).toLocaleString('en-IN') + '.00';
+    const pctChange = ((basePrice - 8048000) / 8048000 * 100).toFixed(2);
+
+    if (btcPriceEl) {
+      btcPriceEl.textContent = formattedPrice;
+      btcPriceEl.style.backgroundColor = deltaPrice >= 0 ? 'rgba(4, 180, 136, 0.2)' : 'rgba(237, 85, 51, 0.15)';
+      setTimeout(() => { if (btcPriceEl) btcPriceEl.style.backgroundColor = 'transparent'; }, 600);
+    }
+
+    if (btcChangeEl) {
+      btcChangeEl.textContent = `${pctChange >= 0 ? '+' : ''}${pctChange}% ${pctChange >= 0 ? '▲' : '▼'}`;
+      btcChangeEl.style.color = pctChange >= 0 ? 'var(--positive)' : 'var(--negative)';
+    }
+
+    if (heroNavEl) {
+      heroNavEl.textContent = formattedNav;
+      heroNavEl.style.backgroundColor = 'rgba(4, 180, 136, 0.15)';
+      setTimeout(() => { if (heroNavEl) heroNavEl.style.backgroundColor = 'transparent'; }, 600);
+    }
+
+    if (kpiNavEl) {
+      kpiNavEl.textContent = formattedNav;
+      kpiNavEl.style.backgroundColor = 'rgba(4, 180, 136, 0.15)';
+      setTimeout(() => { if (kpiNavEl) kpiNavEl.style.backgroundColor = 'transparent'; }, 600);
+    }
+
+    if (orderQuoteEl) {
+      orderQuoteEl.textContent = `BUY 0.25 BTC @ ${formattedPrice}.00`;
+      orderQuoteEl.style.backgroundColor = 'rgba(4, 180, 136, 0.12)';
+      setTimeout(() => { if (orderQuoteEl) orderQuoteEl.style.backgroundColor = 'transparent'; }, 600);
+    }
+  }, 2200);
 }
