@@ -1,0 +1,21 @@
+{
+  "name": "cryptovista-x-frontend",
+  "version": "4.2.0",
+  "description": "CryptoVista X Enterprise — Node.js & JavaScript Frontend Workstation",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test_frontend.js"
+  },
+  "keywords": [
+    "cryptovista",
+    "fintech",
+    "enterprise",
+    "crm",
+    "trading-simulation",
+    "nodejs"
+  ],
+  "author": "Google DeepMind Advanced Agentic Coding",
+  "license": "UNLICENSED"
+}
