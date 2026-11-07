@@ -1,22 +1,220 @@
 /**
- * CryptoVista X Enterprise - Simulated Trading Page (Module C)
+ * CryptoVista X Enterprise - Module 3: Simulated Trading (Pages 22 – 27)
+ * Terminal, Order Previews, Orders Roster, Order Details, and Trade History
  */
 
-export function renderTrading(state, quotes) {
+import { renderBreadcrumbs, renderPageHeader, renderStatusBadge } from '../components/designSystem.js';
+import { store } from '../state.js';
+
+export function renderTrading(state, quotes, subRoute = 'terminal', paramId = null) {
   const currencyFmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' });
+
+  // Page 24: Order Details View
+  if (subRoute === 'order-details' && paramId) {
+    const order = state.orders.find(o => o.id === paramId) || state.orders[0] || {
+      id: paramId, symbol: 'BTC', side: 'BUY', qty: 0.25, price: 8245100, status: 'FILLED', time: '10:14:02'
+    };
+
+    const totalVal = order.qty * order.price;
+    const fee = totalVal * 0.0010;
+    const slippage = totalVal * 0.0002;
+
+    return `
+      <div>
+        ${renderPageHeader(
+          `Simulated Order Details — ${order.id}`,
+          `Immutable forensic fill parameters, slippage calculation, and double-entry ledger settlement`,
+          [
+            { label: 'Trading', href: '#/app/trading' },
+            { label: 'Orders', href: '#/app/trading/orders' },
+            { label: order.id }
+          ],
+          [
+            { label: 'View Trade History', variant: 'btn-outline', onclick: `location.hash='#/app/trading/history';` },
+            { label: `Related ${order.symbol} Holding &rarr;`, variant: 'btn-primary', onclick: `location.hash='#/app/portfolio/holdings/${order.symbol}';` }
+          ]
+        )}
+
+        <div class="kpi-grid" style="grid-template-columns:repeat(4, 1fr); margin-bottom:20px;">
+          <div class="kpi-card">
+            <div class="kpi-label">EXECUTION STATUS</div>
+            <div class="kpi-value" style="font-size:18px;">${renderStatusBadge(order.status)}</div>
+            <div class="kpi-delta">Ledger Posted</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">FILLED QUANTITY</div>
+            <div class="kpi-value" style="font-family:monospace;">${order.qty.toFixed(4)} ${order.symbol}</div>
+            <div class="kpi-delta">Side: ${order.side}</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">FILL PRICE</div>
+            <div class="kpi-value" style="font-family:monospace; font-size:18px;">${currencyFmt.format(order.price)}</div>
+            <div class="kpi-delta">Simulated Reference</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">TOTAL SETTLED VALUE</div>
+            <div class="kpi-value" style="font-size:18px; color:var(--cv-brand-green);">${currencyFmt.format(totalVal)}</div>
+            <div class="kpi-delta">Fee: ${currencyFmt.format(fee)}</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Forensic Audit Trail & Ledger Voucher</span>
+            <span class="badge badge-positive">IDEMPOTENT TRANSACTION</span>
+          </div>
+          <div style="font-size:13px; line-height:1.7; color:var(--cv-text-secondary);">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div>
+                <strong>Transaction ID:</strong> <span style="font-family:monospace;">TXN-${order.id}-POST</span><br>
+                <strong>Timestamp:</strong> ${order.time} IST &bull; 2026-11-07<br>
+                <strong>Trading Account:</strong> VA-88392 (TENANT-APEX-01)<br>
+                <strong>Accounting Model:</strong> Balanced Double-Entry Virtual Cash Debited
+              </div>
+              <div>
+                <strong>Simulated Slippage (0.02%):</strong> ${currencyFmt.format(slippage)}<br>
+                <strong>Platform Fee (0.10%):</strong> ${currencyFmt.format(fee)}<br>
+                <strong>Settlement Mode:</strong> Simulated Immediate Fill &bull; Zero Risk
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:20px; display:flex; gap:12px;">
+            <a href="#/app/trading/orders" class="btn btn-outline" style="font-size:12px;">&larr; Back to Orders Roster</a>
+            <a href="#/app/portfolio/holdings/${order.symbol}" class="btn btn-primary" style="font-size:12px;">Inspect Portfolio Holding &rarr;</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Page 23: Orders List View
+  if (subRoute === 'orders') {
+    return `
+      <div>
+        ${renderPageHeader(
+          'Simulated Orders Management',
+          'Roster of open, filled, and settled simulated market and limit orders',
+          [
+            { label: 'Trading', href: '#/app/trading' },
+            { label: 'Orders' }
+          ],
+          [
+            { label: 'New Order in Terminal &rarr;', variant: 'btn-primary', onclick: `location.hash='#/app/trading';` }
+          ]
+        )}
+
+        <div class="panel">
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Time</th>
+                  <th>Asset</th>
+                  <th>Side</th>
+                  <th>Quantity</th>
+                  <th>Fill Price</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${state.orders.map(o => `
+                  <tr>
+                    <td><code>${o.id}</code></td>
+                    <td>${o.time}</td>
+                    <td><strong>${o.symbol}</strong></td>
+                    <td><span class="badge ${o.side === 'BUY' ? 'badge-positive' : 'badge-negative'}">${o.side}</span></td>
+                    <td class="tabular-nums">${o.qty.toFixed(4)}</td>
+                    <td class="tabular-nums" style="font-family:monospace;">${currencyFmt.format(o.price)}</td>
+                    <td>${renderStatusBadge(o.status)}</td>
+                    <td>
+                      <a href="#/app/trading/orders/${o.id}" class="btn btn-outline" style="padding:4px 8px; font-size:11px;">View Details</a>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Page 25: Trade History
+  if (subRoute === 'history') {
+    return `
+      <div>
+        ${renderPageHeader(
+          'Simulated Trade Execution History',
+          'Chronological audit ledger of simulated digital asset fills and settlements',
+          [
+            { label: 'Trading', href: '#/app/trading' },
+            { label: 'Trade History' }
+          ],
+          [
+            { label: 'Export Ledger CSV', variant: 'btn-outline', onclick: `alert('Exported chronological trade history CSV.');` },
+            { label: 'Trading Terminal &rarr;', variant: 'btn-primary', onclick: `location.hash='#/app/trading';` }
+          ]
+        )}
+
+        <div class="panel">
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Trade Ref</th>
+                  <th>Order Ref</th>
+                  <th>Time</th>
+                  <th>Asset</th>
+                  <th>Side</th>
+                  <th>Executed Qty</th>
+                  <th>Settled Price</th>
+                  <th>Platform Fee</th>
+                  <th>Related Holding</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${state.orders.map((o, idx) => `
+                  <tr>
+                    <td style="font-family:monospace; font-weight:600;">TRD-${1000 + idx}</td>
+                    <td><a href="#/app/trading/orders/${o.id}" style="color:var(--cv-brand-green);">${o.id}</a></td>
+                    <td>${o.time}</td>
+                    <td><strong>${o.symbol}</strong></td>
+                    <td><span class="badge ${o.side === 'BUY' ? 'badge-positive' : 'badge-negative'}">${o.side}</span></td>
+                    <td style="font-family:monospace;">${o.qty.toFixed(4)}</td>
+                    <td style="font-family:monospace; font-weight:600;">${currencyFmt.format(o.price)}</td>
+                    <td>${currencyFmt.format(o.qty * o.price * 0.0010)}</td>
+                    <td>
+                      <a href="#/app/portfolio/holdings/${o.symbol}" class="btn btn-outline" style="padding:4px 8px; font-size:11px;">Holding &rarr;</a>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Page 22: Trading Terminal (Default)
   const defaultQuote = quotes[0] || { symbol: 'BTC', priceInr: 8245100 };
 
   return `
-    <div class="page-wrapper">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <div>
-          <h1 class="page-title">Simulated Trading Execution Gateway</h1>
-          <p class="page-subtitle">Risk-free simulated order book with real-time fee calculation, slippage modeling, and double-entry ledger settlement.</p>
-        </div>
-        <div style="display:flex; gap:10px;">
-          <span class="badge badge-positive">AVAILABLE VIRTUAL CASH: ${currencyFmt.format(state.availableCashInr)}</span>
-        </div>
-      </div>
+    <div>
+      ${renderPageHeader(
+        'Simulated Trading Execution Gateway',
+        'Risk-free order book with real-time fee calculation, slippage modeling, and double-entry ledger settlement',
+        [
+          { label: 'Trading' },
+          { label: 'Terminal' }
+        ],
+        [
+          { label: 'Order History', variant: 'btn-outline', onclick: `location.hash='#/app/trading/orders';` },
+          { label: 'Portfolio Holdings &rarr;', variant: 'btn-primary', onclick: `location.hash='#/app/portfolio/holdings';` }
+        ]
+      )}
 
       <div class="disclosure-box">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cv-brand-green)" stroke-width="2">
@@ -84,14 +282,17 @@ export function renderTrading(state, quotes) {
             </div>
           </div>
 
-          <button type="button" id="submit-order-btn" class="btn btn-primary" style="width:100%; height:42px;">
-            Execute Simulated Order
+          <button type="button" id="submit-order-btn" class="btn btn-primary" style="width:100%; height:42px; font-weight:700;">
+            Preview & Execute Simulated Order
           </button>
         </div>
 
         <!-- Orders & Ledger History -->
         <div class="card">
-          <h3 style="font-size:16px; font-weight:700; margin-bottom:14px;">Simulated Execution History & Ledger Postings</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="font-size:16px; font-weight:700;">Recent Simulated Order Fills</h3>
+            <a href="#/app/trading/orders" style="font-size:12px; color:var(--cv-brand-green); font-weight:600;">View All Orders &rarr;</a>
+          </div>
           <div class="table-container">
             <table class="data-table" id="orders-table">
               <thead>
@@ -103,18 +304,22 @@ export function renderTrading(state, quotes) {
                   <th>Quantity</th>
                   <th>Fill Price</th>
                   <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 ${state.orders.map(o => `
                   <tr>
-                    <td><code>${o.id}</code></td>
+                    <td><a href="#/app/trading/orders/${o.id}" style="color:var(--cv-brand-green); font-weight:600;">${o.id}</a></td>
                     <td>${o.time}</td>
                     <td><strong>${o.symbol}</strong></td>
                     <td><span class="badge ${o.side === 'BUY' ? 'badge-positive' : 'badge-negative'}">${o.side}</span></td>
                     <td class="tabular-nums">${o.qty.toFixed(4)}</td>
                     <td class="tabular-nums">${currencyFmt.format(o.price)}</td>
-                    <td><span class="badge badge-positive">${o.status}</span></td>
+                    <td>${renderStatusBadge(o.status)}</td>
+                    <td>
+                      <a href="#/app/trading/orders/${o.id}" class="btn btn-outline" style="padding:3px 6px; font-size:11px;">Details</a>
+                    </td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -125,7 +330,6 @@ export function renderTrading(state, quotes) {
     </div>
   `;
 }
-
 
 export function initTradingListeners(quotes, onOrderExecuted) {
   let currentSide = 'BUY';
@@ -186,12 +390,17 @@ export function initTradingListeners(quotes, onOrderExecuted) {
         return;
       }
 
-      const res = store.executeSimulatedOrder(symbol, currentSide, qty, price);
-      if (res.success) {
-        alert(`Executed simulated ${currentSide} order for ${qty} ${symbol} at reference price ₹${price.toLocaleString('en-IN')}.\nOrder Ref: ${res.orderId}\nVirtual ledger posted.`);
-        if (onOrderExecuted) onOrderExecuted();
-      } else {
-        alert('Order execution rejected: ' + res.message);
+      // Order Preview Confirmation
+      const totalEstimated = qty * price;
+      if (confirm(`SIMULATED ORDER PREVIEW:\n\nAction: ${currentSide}\nAsset: ${symbol}\nQuantity: ${qty}\nExecution Price: ₹${price.toLocaleString('en-IN')}\nEstimated Virtual Cost: ₹${totalEstimated.toLocaleString('en-IN')}\n\nProceed to simulate execution and post to double-entry ledger?`)) {
+        const res = store.executeSimulatedOrder(symbol, currentSide, qty, price);
+        if (res.success) {
+          alert(`Order Filled: ${res.orderId}\nPosted to double-entry ledger for tenant TENANT-APEX-01.`);
+          location.hash = `#/app/trading/orders/${res.orderId}`;
+          if (onOrderExecuted) onOrderExecuted();
+        } else {
+          alert('Order rejected: ' + res.message);
+        }
       }
     };
   }
