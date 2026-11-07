@@ -591,3 +591,59 @@ export function renderResetPasswordPage() {
   `;
 }
 
+// Page: Learning Center (14 Educational Chapters)
+export function renderLearningPage() {
+  const chapters = [
+    { id: 1, title: 'Digital Asset Fundamentals', desc: 'Understanding cryptographic ledgers, decentralized consensus, hashing algorithms, and digital asset scarcity.', tag: 'FOUNDATIONS' },
+    { id: 2, title: 'Bitcoin Explained', desc: 'Proof-of-work mechanics, block reward halvings, hash rate difficulty adjustments, and institutional treasury reserve models.', tag: 'ASSET DEEP DIVE' },
+    { id: 3, title: 'Ethereum and Blockchain', desc: 'The EVM (Ethereum Virtual Machine), smart contract state machines, proof-of-stake validation, and gas pricing dynamics.', tag: 'PROTOCOLS' },
+    { id: 4, title: 'Understanding Asset Prices', desc: 'Order book mechanics, continuous double auctions, bid-ask spreads, and trade volume discovery across liquidity pools.', tag: 'MARKET MECHANICS' },
+    { id: 5, title: 'Market Trends & Telemetry', desc: 'Analyzing 24-hour moving averages, momentum oscillators, market breadth, and benchmark relative volatility curves.', tag: 'ANALYTICS' },
+    { id: 6, title: 'Portfolio Diversification', desc: 'Modern portfolio theory applied to digital assets: correlation coefficients, Sharpe ratios, and concentration risk limits.', tag: 'RISK MANAGEMENT' },
+    { id: 7, title: 'Portfolio Analytics & NAV', desc: 'Calculating Net Asset Value, tracking cash drag, and reconciling simulated mark-to-market balances with historical cost basis.', tag: 'VALUATION' },
+    { id: 8, title: 'Understanding Market Risk', desc: 'Assessing maximum drawdown, systemic exchange liquidity failure, protocol exploits, and stress-testing extreme market conditions.', tag: 'RISK MANAGEMENT' },
+    { id: 9, title: 'Simulated Trading Principles', desc: 'Mastering trade simulation without capital risk: understanding non-custodial boundaries and deterministic matching engines.', tag: 'SIMULATION' },
+    { id: 10, title: 'Orders and Execution Models', desc: 'Comparing Market, Limit, and Stop-Loss orders, modeling 0.02% slippage curves, and calculating 0.10% simulated commission fees.', tag: 'EXECUTION' },
+    { id: 11, title: 'Customer Relationship Mgmt', desc: 'Enterprise Customer 360: managing corporate institutional relationships, tracking KYC onboarding, and maintaining health scores.', tag: 'OPERATIONS' },
+    { id: 12, title: 'Lead & Sales Management', desc: 'Qualifying enterprise prospects, managing multi-stage deal pipelines, and forecasting annual recurring revenue retainers.', tag: 'SALES' },
+    { id: 13, title: 'Business Analytics & Telemetry', desc: 'Monitoring operational KPIs, conversion velocities, SLA compliance distributions, and support desk resolution times.', tag: 'OPERATIONS' },
+    { id: 14, title: 'Security, Governance & Audit', desc: 'Four-eyes dual approvals, Argon2id single-step password verification, tenant database isolation, and immutable audit logging.', tag: 'GOVERNANCE' }
+  ];
+
+  return `
+    <div style="min-height:100vh; background:var(--cv-bg-page); display:flex; flex-direction:column; justify-content:space-between;">
+      ${renderPublicHeader('learning')}
+      <div style="max-width:1120px; width:100%; margin:48px auto; padding:0 24px;">
+        <div style="text-align:center; margin-bottom:40px;">
+          <span class="brand-badge" style="font-size:11px;">CRYPTOVISTA LEARNING CENTER</span>
+          <h1 class="page-title" style="font-size:36px; margin-top:10px;">Digital finance, made clearer.</h1>
+          <p class="page-subtitle" style="font-size:16px; max-width:640px; margin:8px auto 0;">
+            14 structured institutional guides covering digital asset mechanics, simulated trading, portfolio valuation, and enterprise operations.
+          </p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:20px; margin-bottom:48px;">
+          ${chapters.map(c => `
+            <div class="panel" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between; padding:24px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <span style="font-size:11px; font-weight:700; color:var(--cv-brand-green);">${c.tag}</span>
+                  <span style="font-size:11px; font-weight:700; color:var(--cv-text-muted);">CHAPTER ${c.id}</span>
+                </div>
+                <h3 style="font-size:18px; font-weight:700; color:var(--cv-text-primary); margin-bottom:8px;">${c.title}</h3>
+                <p style="font-size:13px; line-height:1.6; color:var(--cv-text-secondary); margin-bottom:16px;">${c.desc}</p>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--cv-border); padding-top:12px;">
+                <span style="font-size:11.5px; color:var(--cv-text-muted);">6 min read</span>
+                <button type="button" class="btn btn-outline" style="font-size:11.5px; padding:4px 10px;" onclick="alert('Viewing Chapter ${c.id}: ${c.title}\\n\\nFull curriculum interactive modules are available in the authenticated workstation.');">Read Chapter &rarr;</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ${renderPublicFooter()}
+    </div>
+  `;
+}
+
+

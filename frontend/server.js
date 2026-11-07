@@ -44,6 +44,7 @@ const db = {
     { id: 'TCK-001', ticketNumber: 'TCK-1094', customerId: 'CUST-001', subject: 'Simulated matching engine latency benchmark on ETH limit orders', priority: 'HIGH', status: 'IN_PROGRESS', slaMinutesRemaining: 180, internalNotes: 'Triage ongoing with algorithmic core.' },
     { id: 'TCK-002', ticketNumber: 'TCK-1095', customerId: 'CUST-002', subject: 'Quarterly ledger audit export request for Q3 virtual settlements', priority: 'NORMAL', status: 'OPEN', slaMinutesRemaining: 420, internalNotes: 'Requested SHA-256 batch ledger hash.' }
   ],
+  demoRequests: [],
   audit: [
     { id: 1001, actor: 'operator@apexcapital.in', action: 'PASSWORD_VERIFIED', entityType: 'AUTH_SESSION', result: 'SUCCESS', details: 'Single-step User ID and Password verification for tenant TENANT-APEX-01' },
     { id: 1002, actor: 'operator@apexcapital.in', action: 'ORDER_SIMULATED', entityType: 'ORDER', result: 'SUCCESS', details: 'Executed BUY 0.25 BTC at reference quote' }
@@ -209,6 +210,81 @@ const server = http.createServer(async (req, res) => {
 
     if (apiPath === '/admin/audit') {
       return sendJson(200, db.audit);
+    }
+
+    if (apiPath === '/public/demo-requests' && req.method === 'POST') {
+      const data = await readBody();
+      if (!data.fullName || !data.email || !data.company) {
+        return sendJson(400, { error: 'Full name, email, and company are required fields.' });
+      }
+
+      const requestId = 'DEMO-' + Date.now();
+      const newEntry = {
+        id: requestId,
+        fullName: data.fullName,
+        email: data.email,
+        company: data.company,
+        jobTitle: data.jobTitle || 'Unspecified',
+        interest: data.interest || 'Platform Overview',
+        message: data.message || '',
+        status: 'RECEIVED',
+        createdAt: new Date().toISOString()
+      };
+      db.demoRequests.push(newEntry);
+
+      db.audit.unshift({
+        id: db.audit.length + 1001,
+        actor: data.email,
+        action: 'DEMO_REQUESTED',
+        entityType: 'LEAD',
+        result: 'SUCCESS',
+        details: `Demo requested by ${data.fullName} (${data.company}) for ${newEntry.interest}`
+      });
+
+      return sendJson(201, {
+        success: true,
+        message: 'Institutional demo request received. An enterprise solutions specialist will contact you within 24 hours.',
+        requestId
+      });
+    }
+
+    if (apiPath.startsWith('/public/search')) {
+      const query = (url.searchParams.get('q') || '').trim().toLowerCase();
+      if (!query) {
+        return sendJson(200, { assets: [], features: [], resources: [] });
+      }
+
+      const assets = db.quotes
+        .filter(q => q.symbol.toLowerCase().includes(query) || q.name.toLowerCase().includes(query))
+        .map(q => ({
+          type: 'Digital Asset',
+          title: `${q.symbol} — ${q.name}`,
+          subtitle: `₹${q.priceInr.toLocaleString('en-IN', { minimumFractionDigits: 2 })} (${q.change24hPct >= 0 ? '+' : ''}${q.change24hPct}%)`,
+          href: `#/app/markets/assets/${q.symbol}`,
+          badge: q.isMock ? 'DETERMINISTIC MOCK' : 'GROWW REFERENCE'
+        }));
+
+      const featureList = [
+        { title: 'Market Intelligence & Telemetry', subtitle: 'Real-time discovery, 24h gainers, order book depth', href: '#/app/markets' },
+        { title: 'Simulated Trading Terminal', subtitle: 'Risk-free execution, 0.02% slippage, double-entry ledger', href: '#/app/trading' },
+        { title: 'Portfolio Analytics & Valuation', subtitle: 'FIFO cost basis, NAV tracking, unrealized P&L', href: '#/app/portfolio' },
+        { title: 'Customer 360 CRM', subtitle: '15-tab profile, account telemetry, relationship health', href: '#/app/crm/customers' },
+        { title: 'Support & SLA Management', subtitle: 'Priority triage, response timers, internal notes', href: '#/app/customer-operations/support' },
+        { title: 'Dual-Approval Workflows', subtitle: 'Four-eyes security governance for critical operations', href: '#/app/approvals' }
+      ];
+
+      const resourceList = [
+        { title: 'Digital Asset Fundamentals', subtitle: 'Blockchain mechanics, consensus, cryptographic ledgers', href: '#/learning' },
+        { title: 'Bitcoin Explained', subtitle: 'Proof of work, halving cycles, institutional adoption', href: '#/learning' },
+        { title: 'Ethereum & Smart Contracts', subtitle: 'Gas execution, token standards, decentralized logic', href: '#/learning' },
+        { title: 'Platform Security Architecture', subtitle: 'Argon2id password hashing, tenant-level database isolation', href: '#/security' },
+        { title: 'FAQ & Knowledge Base', subtitle: 'Simulated trading policies and operational questions', href: '#/faq' }
+      ];
+
+      const features = featureList.filter(f => f.title.toLowerCase().includes(query) || f.subtitle.toLowerCase().includes(query));
+      const resources = resourceList.filter(r => r.title.toLowerCase().includes(query) || r.subtitle.toLowerCase().includes(query));
+
+      return sendJson(200, { assets, features, resources });
     }
 
     return sendJson(404, { error: 'API route not found' });

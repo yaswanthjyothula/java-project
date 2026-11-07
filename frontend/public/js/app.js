@@ -11,7 +11,7 @@ import { fetchMarketQuotes, fetchCustomers, fetchTickets } from './api.js';
 import { store } from './state.js';
 
 // Public Pages (1 – 13)
-import { renderLandingPage } from './pages/landingPage.js';
+import { renderLandingPage, initLandingPageListeners } from './pages/landingPage.js';
 import {
   renderAboutPage,
   renderProductPage,
@@ -25,7 +25,8 @@ import {
   renderLoginPage,
   initLoginPageListeners,
   renderForgotPasswordPage,
-  renderResetPasswordPage
+  renderResetPasswordPage,
+  renderLearningPage
 } from './pages/publicPages.js';
 
 // Authenticated Modules (14 – 130)
@@ -66,6 +67,11 @@ export async function renderApp() {
   // --- PART A: PUBLIC PAGES ROUTING ---
   if (currentRoute === '' || currentRoute === 'landing') {
     root.innerHTML = renderLandingPage();
+    initLandingPageListeners();
+    return;
+  }
+  if (currentRoute === 'learning') {
+    root.innerHTML = renderLearningPage();
     return;
   }
   if (currentRoute === 'about') {
