@@ -5,18 +5,18 @@
  */
 
 export function renderBreadcrumbs(crumbs = []) {
-  if (!crumbs || crumbs.length === 0) return '';
+  if (!crumbs || crumbs.length <= 1) return '';
   return `
-    <nav class="breadcrumb-nav" aria-label="Breadcrumb" style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--cv-text-muted); margin-bottom:12px;">
-      <a href="#/app/dashboard" style="color:var(--cv-text-secondary); text-decoration:none;">Workstation</a>
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb" style="display:flex; align-items:center; gap:6px; font-size:11px; color:var(--cv-text-muted); margin-bottom:8px;">
+      <a href="#/app/dashboard" style="color:var(--cv-text-muted); text-decoration:none;">Workstation</a>
       ${crumbs.map((c, i) => {
         const isLast = i === crumbs.length - 1;
         return `
-          <span style="color:var(--cv-border-dark);">/</span>
+          <span style="color:var(--cv-border-dark); font-size:10px;">/</span>
           ${isLast || !c.href ? `
-            <span style="color:var(--cv-text-primary); font-weight:600;">${c.label}</span>
+            <span style="color:var(--cv-text-secondary); font-weight:500;">${c.label}</span>
           ` : `
-            <a href="${c.href}" style="color:var(--cv-text-secondary); text-decoration:none;">${c.label}</a>
+            <a href="${c.href}" style="color:var(--cv-text-muted); text-decoration:none;">${c.label}</a>
           `}
         `;
       }).join('')}
@@ -26,17 +26,17 @@ export function renderBreadcrumbs(crumbs = []) {
 
 export function renderPageHeader(title, subtitle, crumbs = [], actions = []) {
   return `
-    <div style="margin-bottom:24px;">
+    <div style="margin-bottom:20px;">
       ${renderBreadcrumbs(crumbs)}
       <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
         <div>
-          <h1 class="page-title">${title}</h1>
-          ${subtitle ? `<p class="page-subtitle">${subtitle}</p>` : ''}
+          <h1 class="page-title" style="font-size:20px; font-weight:700; letter-spacing:-0.2px; color:var(--cv-text-primary); margin:0;">${title}</h1>
+          ${subtitle ? `<p class="page-subtitle" style="font-size:12.5px; color:var(--cv-text-secondary); margin-top:3px;">${subtitle}</p>` : ''}
         </div>
         ${actions.length > 0 ? `
-          <div style="display:flex; gap:10px; align-items:center;">
+          <div style="display:flex; gap:8px; align-items:center;">
             ${actions.map(a => `
-              <button class="btn ${a.variant || 'btn-primary'}" id="${a.id || ''}" onclick="${a.onclick || ''}" style="${a.style || ''}">
+              <button class="btn ${a.variant || 'btn-primary'}" id="${a.id || ''}" onclick="${a.onclick || ''}" style="${a.style || 'font-size:12px; padding:6px 12px;'}">
                 ${a.label}
               </button>
             `).join('')}
@@ -57,7 +57,7 @@ export function renderStatCard(label, value, delta, subtext = '', isPositive = t
           ${delta}
         </div>
       ` : ''}
-      ${subtext ? `<div style="font-size:11.5px; color:var(--cv-text-muted); margin-top:4px;">${subtext}</div>` : ''}
+      ${subtext ? `<div style="font-size:11px; color:var(--cv-text-muted); margin-top:3px;">${subtext}</div>` : ''}
     </div>
   `;
 }
@@ -79,14 +79,14 @@ export function renderStatusBadge(status, type = 'default') {
 
 export function renderEmptyState(title, description, actionLabel, actionHref) {
   return `
-    <div style="text-align:center; padding:48px 24px; background:#FFFFFF; border:1px solid var(--cv-border); border-radius:4px;">
-      <div style="width:40px; height:40px; background:var(--cv-soft-green); border-radius:4px; display:inline-flex; align-items:center; justify-content:center; color:var(--cv-brand-green); font-weight:800; font-size:18px; margin-bottom:12px;">
+    <div style="text-align:center; padding:48px 24px; background:#FFFFFF; border:1px solid var(--cv-border); border-radius:3px;">
+      <div style="width:36px; height:36px; background:var(--cv-soft-green); border-radius:3px; display:inline-flex; align-items:center; justify-content:center; color:var(--cv-brand-green); font-weight:800; font-size:16px; margin-bottom:12px;">
         CV
       </div>
-      <h3 style="font-size:16px; font-weight:700; color:var(--cv-text-primary); margin-bottom:6px;">${title}</h3>
-      <p style="font-size:13px; color:var(--cv-text-secondary); max-width:400px; margin:0 auto 16px;">${description}</p>
+      <h3 style="font-size:15px; font-weight:700; color:var(--cv-text-primary); margin-bottom:6px;">${title}</h3>
+      <p style="font-size:12.5px; color:var(--cv-text-secondary); max-width:380px; margin:0 auto 16px;">${description}</p>
       ${actionLabel && actionHref ? `
-        <a href="${actionHref}" class="btn btn-primary" style="font-size:12px; padding:6px 14px;">${actionLabel}</a>
+        <a href="${actionHref}" class="btn btn-primary" style="font-size:11.5px; padding:6px 12px;">${actionLabel}</a>
       ` : ''}
     </div>
   `;

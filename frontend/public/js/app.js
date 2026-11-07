@@ -314,7 +314,7 @@ export async function renderApp() {
   root.innerHTML = `
     <div class="app-layout">
       ${renderSidebar(currentRoute)}
-      <div class="main-wrapper" style="margin-left:260px; min-height:100vh; background:var(--cv-bg-page);">
+      <div class="main-wrapper" style="margin-left:240px; min-height:100vh; background:var(--cv-bg-page);">
         ${renderTopbar(state.currentUser, state.tenantId)}
         <main class="content-body" id="page-container" style="padding:28px;">
           ${pageContent}

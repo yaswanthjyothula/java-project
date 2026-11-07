@@ -15,17 +15,17 @@ export function renderDashboard(state, quotes, customers, tickets) {
   return `
     <div>
       ${renderPageHeader(
-        'Enterprise Financial Dashboard',
-        'Consolidated market intelligence, virtual portfolio accounting, and operational CRM',
-        [
-          { label: 'Overview' },
-          { label: 'Dashboard' }
-        ],
-        [
-          { label: 'Simulate Trade &rarr;', variant: 'btn-primary', onclick: `location.hash='#/app/trading';` },
-          { label: 'Customer 360 &rarr;', variant: 'btn-outline', onclick: `location.hash='#/app/crm/customers';` }
-        ]
-      )}
+    'Enterprise Financial Dashboard',
+    'Consolidated market intelligence, virtual portfolio accounting, and operational CRM',
+    [
+      { label: 'Overview' },
+      { label: 'Dashboard' }
+    ],
+    [
+      { label: 'Simulate Trade &rarr;', variant: 'btn-primary', onclick: `location.hash='#/app/trading';` },
+      { label: 'Customer 360 &rarr;', variant: 'btn-outline', onclick: `location.hash='#/app/crm/customers';` }
+    ]
+  )}
 
       <!-- Primary KPI Grid -->
       <div class="kpi-grid">
