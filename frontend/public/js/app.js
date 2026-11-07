@@ -17,6 +17,7 @@ import { renderLeadsPage, initLeadsListeners } from './pages/leadsPage.js';
 import { renderSupportPage, initSupportListeners } from './pages/supportPage.js';
 import { renderApprovalsPage, initApprovalsListeners } from './pages/approvalsPage.js';
 import { renderAuditPage, initAuditListeners } from './pages/auditPage.js';
+import { renderLandingPage } from './pages/landingPage.js';
 
 let cachedQuotes = null;
 let cachedCustomers = null;
@@ -35,7 +36,13 @@ export async function renderApp() {
   await loadData();
   const state = store.getState();
   const rawHash = window.location.hash.replace(/^#\/?/, '');
-  const currentRoute = rawHash || 'dashboard';
+  const currentRoute = rawHash || 'landing';
+
+  // Dedicated full-width layout for Landing Page
+  if (currentRoute === 'landing') {
+    root.innerHTML = renderLandingPage();
+    return;
+  }
 
   let pageContent = '';
 
@@ -142,3 +149,4 @@ window.addEventListener('hashchange', () => {
 store.subscribe(() => {
   renderApp();
 });
+

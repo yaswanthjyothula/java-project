@@ -141,3 +141,4 @@ export function renderDashboard(state, quotes, customers, tickets) {
     </div>
   `;
 }
+

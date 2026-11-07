@@ -6,6 +6,7 @@
 export function renderSidebar(currentRoute) {
   const routes = [
     { group: 'OVERVIEW', items: [
+      { id: 'landing', label: 'Landing Page' },
       { id: 'dashboard', label: 'Dashboard' }
     ]},
     { group: 'MARKETS & PORTFOLIO', items: [
@@ -65,3 +66,4 @@ export function renderTopbar(user, tenantId) {
     </header>
   `;
 }
+
